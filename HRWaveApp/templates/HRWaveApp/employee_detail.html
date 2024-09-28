@@ -1,4 +1,4 @@
-{% extends 'hr_records/base.html' %}
+{% extends 'HRWaveApp/base.html' %}
 
 {% block content %}
 <div class="container-fluid mt-3">
@@ -33,25 +33,25 @@
 
 			    <div class="col-sm-3 mt-3">
 			        <div class="text-center">
-			            <a class="btn btn-danger btn-block" href="{% url 'hr_records:employee_list' %}">Вернуться</a>
+			            <a class="btn btn-danger btn-block" href="{% url 'HRWaveApp:employee_list' %}">Вернуться</a>
 			        </div>
 			    </div>
 
 			    <div class="col-sm-3 mt-3">
 			        <div class="text-center">
-			            <a class="btn btn-success btn-block" href="{% url 'hr_records:edit_employee' employee_id=employee.employee_id %}">Редактировать</a>
+			            <a class="btn btn-success btn-block" href="{% url 'HRWaveApp:edit_employee' employee_id=employee.employee_id %}">Редактировать</a>
 			        </div>
 			    </div>
 
 			    <div class="col-sm-3 mt-3">
 			        <div class="text-center">
-			            <a class="btn btn-info btn-block" href="{% url 'hr_records:export_json' %}?employee_id={{ employee.employee_id }}">Экспорт в JSON</a>
+			            <a class="btn btn-info btn-block" href="{% url 'HRWaveApp:export_json' %}?employee_id={{ employee.employee_id }}">Экспорт в JSON</a>
 			        </div>
 			    </div>
 
 			    <div class="col-sm-3 mt-3">
 			        <div class="text-center">
-			            <a class="btn btn-info btn-block" href="{% url 'hr_records:export_pdf' employee_id=employee.employee_id %}">Экспорт в PDF</a>
+			            <a class="btn btn-info btn-block" href="{% url 'HRWaveApp:export_pdf' employee_id=employee.employee_id %}">Экспорт в PDF</a>
 			        </div>
 			    </div>
 

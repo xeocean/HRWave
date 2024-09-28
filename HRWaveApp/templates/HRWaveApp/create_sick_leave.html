@@ -1,6 +1,7 @@
-{% extends 'hr_records/base.html' %}
+{% extends 'HRWaveApp/base.html' %}
 
 {% block content %}
+
 
 <div class="container mt-3">
     <form method="post">
@@ -16,36 +17,41 @@
 
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="{{ form.start_date_business_trip.id_for_label }}">Дата начала командировки:</label>
-                    <input type="date" id="{{ form.start_date_business_trip.id_for_label }}"
-                           name="{{ form.start_date_business_trip.name }}" class="form-control"
-                           value="{{ form.start_date_business_trip.value }}">
-                    {% if form.errors.start_date_business_trip %}
-                        <h6 class="text-danger">{{ form.errors.start_date_business_trip }}</h6>
+                    <label for="{{ form.start_date_sick_leave.id_for_label }}">Дата начала больничного:</label>
+                    <input type="date" id="{{ form.start_date_sick_leave.id_for_label }}"
+                           name="{{ form.start_date_sick_leave.name }}" class="form-control"
+                           value="{{ form.start_date_sick_leave.value }}">
+                    {% if form.errors.start_date_sick_leave %}
+                        <h6 class="text-danger">{{ form.errors.start_date_sick_leave }}</h6>
                     {% endif %}
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="{{ form.end_date_business_trip.id_for_label }}">Дата окончания командировки:</label>
-                    <input type="date" id="{{ form.end_date_business_trip.id_for_label }}"
-                           name="{{ form.end_date_business_trip.name }}" class="form-control"
-                           value="{{ form.end_date_business_trip.value }}">
-                    {% if form.errors.end_date_business_trip %}
-                        <h6 class="text-danger">{{ form.errors.end_date_business_trip }}</h6>
+                    <label for="{{ form.end_date_sick_leave.id_for_label }}">Дата окончания больничного:</label>
+                    <input type="date" id="{{ form.end_date_sick_leave.id_for_label }}"
+                           name="{{ form.end_date_sick_leave.name }}" class="form-control"
+                           value="{{ form.end_date_sick_leave.value }}">
+                    {% if form.errors.end_date_sick_leave %}
+                        <h6 class="text-danger">{{ form.errors.end_date_sick_leave }}</h6>
                     {% endif %}
                 </div>
             </div>
 
 	        <div class="col-md-4">
                 <div class="form-group">
-                    <label for="{{ form.destination.id_for_label }}">Место назначения:</label>
-                    <input type="text" id="{{ form.destination.id_for_label }}"
-                           name="{{ form.destination.name }}" class="form-control"
-                           value="{{ form.destination.value }}" placeholder="Опционально">
-                    {% if form.errors.destination %}
-                        <h6 class="text-danger">{{ form.errors.destination }}</h6>
+                    <label for="{{ form.reason.id_for_label }}">Причина:</label>
+	                <select id="{{ form.reason.id_for_label }}" name="{{ form.reason.name }}" class="form-control">
+			            <option value="Заболевание">Заболевание</option>
+			            <option value="Травма">Травма</option>
+			            <option value="Карантин">Карантин</option>
+		                <option value="Протезирование в стационаре">Протезирование в стационаре</option>
+				        <option value="Лечение в санаторно-курортной организации">Лечение в санаторно-курортной организации</option>
+			            <option value="Иное состояние">Иное состояние</option>
+	                </select>
+                    {% if form.errors.reason %}
+                        <h6 class="text-danger">{{ form.errors.reason }}</h6>
                     {% endif %}
                 </div>
             </div>
@@ -55,7 +61,7 @@
 		<div class="row align-items-start mt-3 mb-3 justify-content-between">
 		    <div class="col-12 col-md-3 mb-2">
 		        <div class="text-center">
-		            <a class="btn btn-danger btn-block" href="{% url 'hr_records:employee_list' %}">Вернуться</a>
+		            <a class="btn btn-danger btn-block" href="{% url 'HRWaveApp:employee_list' %}">Вернуться</a>
 		        </div>
 		    </div>
 		    <div class="col-12 col-md-3 mb-2">
@@ -86,7 +92,7 @@
 				    </div>
 				</div>
 
-	             <!-- Модальное окно для ошибки даты -->
+	            <!-- Модальное окно для ошибки даты -->
 				<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
 				    <div class="modal-dialog modal-dialog-centered" role="document">
 				        <div class="modal-content">
@@ -97,7 +103,7 @@
 				                </button>
 				            </div>
 				            <div class="modal-body">
-				                Дата окончания командировки не может быть меньше даты начала.
+				                Дата окончания больничного не может быть меньше даты начала.
 				            </div>
 				            <div class="modal-footer">
 				                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
@@ -131,8 +137,8 @@
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
-		    const startDateInput = document.getElementById("{{ form.start_date_business_trip.id_for_label }}");
-		    const endDateInput = document.getElementById("{{ form.end_date_business_trip.id_for_label }}");
+		    const startDateInput = document.getElementById("{{ form.start_date_sick_leave.id_for_label }}");
+		    const endDateInput = document.getElementById("{{ form.end_date_sick_leave.id_for_label }}");
 		    const createButton = document.querySelector(".btn-success");
             const form = document.querySelector("form");
 

@@ -1,4 +1,4 @@
-{% extends 'hr_records/base.html' %}
+{% extends 'HRWaveApp/base.html' %}
 
 {% block content %}
 
@@ -32,25 +32,25 @@
 	    </div>
 
 		<div class="form-group mb-0 col-md-2">
-		<a href="{% url 'hr_records:sick_leave_pdf' %}?q={{ request.GET.q }}&year={{ request.GET.year }}
+		<a href="{% url 'HRWaveApp:business_trip_pdf' %}?q={{ request.GET.q }}&year={{ request.GET.year }}
 		&month={{ request.GET.month }}" class="btn btn-secondary btn-block">Экспорт в PDF</a>
 		</div>
 
 	</form>
 
 	<div class="row mt-2">
-	    {% for sick_leave in sick_leaves %}
+	    {% for business_trip in business_trips %}
 		    <div class="col-12">
 		        <div class="card mb-3">
 		            <div class="card-header">
-		                Сотрудник: {{ sick_leave.employee_sick_leave }}
+		                Сотрудник: {{ business_trip.employee_business_trip }}
 		            </div>
 		            <div class="card-body">
-		                <p class="card-text">Дата начала больничного: {{ sick_leave.start_date_sick_leave }}</p>
-		                <p class="card-text">Дата конца больничного: {{ sick_leave.end_date_sick_leave }}</p>
-		                <p class="card-text">Причина:
-		                    {% if sick_leave.reason %}
-		                        {{ sick_leave.reason }}
+		                <p class="card-text">Дата начала командировки: {{ business_trip.start_date_business_trip }}</p>
+		                <p class="card-text">Дата конца командировки: {{ business_trip.end_date_business_trip }}</p>
+		                <p class="card-text">Место назначения:
+		                    {% if business_trip.destination %}
+		                        {{ business_trip.destination }}
 		                    {% else %}
 		                        Нет данных
 		                    {% endif %}
@@ -97,3 +97,4 @@
 	</nav>
 
 {% endblock content %}
+

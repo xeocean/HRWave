@@ -31,23 +31,23 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('hr_records:employee_list')
+                return redirect('HRWaveApp:employee_list')
         else:
             messages.error(request, 'Доступ запрещен. Проверьте учетные данные.')
     else:
         form = AuthenticationForm()
 
     context = {'form': form}
-    return render(request, 'hr_records/login.html', context)
+    return render(request, 'HRWaveApp/login.html', context)
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def logout_view(request):
     logout(request)
-    return redirect('hr_records:login')
+    return redirect('HRWaveApp:login')
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def search_and_paginate(request, model, search_field, date_field_start, date_field_end, items_per_page):
     search_query = request.GET.get('q')
     year = request.GET.get('year')
@@ -77,38 +77,38 @@ def search_and_paginate(request, model, search_field, date_field_start, date_fie
     return items, search_query
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def employee_list(request):
     employees, search_query = search_and_paginate(request, Employee, 'last_name', None, None, 10)
     context = {'employees': employees, 'search_query': search_query, 'items': employees}
-    return render(request, 'hr_records/employee_list.html', context)
+    return render(request, 'HRWaveApp/employee_list.html', context)
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def vacation_list(request):
     vacations, search_query = search_and_paginate(request, Vacation, 'employee_vacation__last_name',
                                                   'start_date_vacation', 'end_date_vacation', 3)
     context = {'vacations': vacations, 'search_query': search_query, 'items': vacations}
-    return render(request, 'hr_records/vacation_list.html', context)
+    return render(request, 'HRWaveApp/vacation_list.html', context)
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def business_trip_list(request):
     business_trips, search_query = search_and_paginate(request, BusinessTrip, 'employee_business_trip__last_name',
                                                        'start_date_business_trip', 'end_date_business_trip', 3)
     context = {'business_trips': business_trips, 'search_query': search_query, 'items': business_trips}
-    return render(request, 'hr_records/business_trip_list.html', context)
+    return render(request, 'HRWaveApp/business_trip_list.html', context)
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def sick_leave_list(request):
     sick_leaves, search_query = search_and_paginate(request, SickLeave, 'employee_sick_leave__last_name',
                                                     'start_date_sick_leave', 'end_date_sick_leave', 3)
     context = {'sick_leaves': sick_leaves, 'search_query': search_query, 'items': sick_leaves}
-    return render(request, 'hr_records/sick_leave_list.html', context)
+    return render(request, 'HRWaveApp/sick_leave_list.html', context)
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def employee_detail(request, employee_id):
     employee = get_object_or_404(Employee, employee_id=employee_id)
 
@@ -137,24 +137,24 @@ def employee_detail(request, employee_id):
         'sick_leaves_page': sick_leaves_page
     }
 
-    return render(request, 'hr_records/employee_detail.html', context)
+    return render(request, 'HRWaveApp/employee_detail.html', context)
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def create_employee(request):
     if request.method == 'POST':
         form = EmployeeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('hr_records:employee_list')
+            return redirect('HRWaveApp:employee_list')
     else:
         form = EmployeeForm()
 
     context = {'form': form}
-    return render(request, 'hr_records/create_employee.html', context)
+    return render(request, 'HRWaveApp/create_employee.html', context)
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def create_record(request, record_type):
     employee_id = request.GET.get('employee_id')
     employee = Employee.objects.get(pk=employee_id)
@@ -172,7 +172,7 @@ def create_record(request, record_type):
             record = form.save(commit=False)
             setattr(record, f'employee_{record_type}_id', employee_id)
             record.save()
-            return redirect('hr_records:employee_list')
+            return redirect('HRWaveApp:employee_list')
     else:
         if record_type == 'vacation':
             form = VacationForm()
@@ -182,25 +182,25 @@ def create_record(request, record_type):
             form = SickLeaveForm()
 
     context = {'form': form, 'employee': employee}
-    return render(request, f'hr_records/create_{record_type}.html', context)
+    return render(request, f'HRWaveApp/create_{record_type}.html', context)
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def create_vacation(request):
     return create_record(request, 'vacation')
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def create_business_trip(request):
     return create_record(request, 'business_trip')
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def create_sick_leave(request):
     return create_record(request, 'sick_leave')
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def edit_employee(request, employee_id):
     employee = get_object_or_404(Employee, employee_id=employee_id)
 
@@ -208,15 +208,15 @@ def edit_employee(request, employee_id):
         form = EmployeeForm(request.POST, instance=employee)
         if form.is_valid():
             form.save()
-            return redirect('hr_records:employee_detail', employee_id=employee.employee_id)
+            return redirect('HRWaveApp:employee_detail', employee_id=employee.employee_id)
     else:
         form = EmployeeForm(instance=employee)
 
     context = {'form': form, 'employee': employee}
-    return render(request, 'hr_records/edit_employee.html', context)
+    return render(request, 'HRWaveApp/edit_employee.html', context)
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def export_json(request):
     employee_id = request.GET.get('employee_id')
 
@@ -265,7 +265,7 @@ def export_json(request):
     return response
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def export_pdf(request, employee_id):
     try:
         employee = Employee.objects.get(employee_id=employee_id)
@@ -281,7 +281,7 @@ def export_pdf(request, employee_id):
 
     c = canvas.Canvas(buffer, pagesize=portrait(letter))
 
-    pdfmetrics.registerFont(TTFont('Arial', 'hr_records/fonts/ArialRegular.ttf'))
+    pdfmetrics.registerFont(TTFont('Arial', 'HRWaveApp/fonts/ArialRegular.ttf'))
 
     c.setFont('Arial', 12)
 
@@ -357,7 +357,7 @@ def export_pdf(request, employee_id):
     return response
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def vacation_pdf(request):
 
     search_query = request.GET.get('q')
@@ -389,7 +389,7 @@ def vacation_pdf(request):
     # Создаем PDF-документ с помощью библиотеки ReportLab
     c = canvas.Canvas(response, pagesize=letter)
 
-    pdfmetrics.registerFont(TTFont('Arial', 'hr_records/fonts/ArialRegular.ttf'))
+    pdfmetrics.registerFont(TTFont('Arial', 'HRWaveApp/fonts/ArialRegular.ttf'))
 
     c.setFont('Arial', 12)
 
@@ -415,7 +415,7 @@ def vacation_pdf(request):
     return response
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def business_trip_pdf(request):
 
     search_query = request.GET.get('q')
@@ -446,7 +446,7 @@ def business_trip_pdf(request):
     # Создаем PDF-документ с помощью библиотеки ReportLab
     c = canvas.Canvas(response, pagesize=letter)
 
-    pdfmetrics.registerFont(TTFont('Arial', 'hr_records/fonts/ArialRegular.ttf'))
+    pdfmetrics.registerFont(TTFont('Arial', 'HRWaveApp/fonts/ArialRegular.ttf'))
 
     c.setFont('Arial', 12)
 
@@ -476,7 +476,7 @@ def business_trip_pdf(request):
     return response
 
 
-@login_required(login_url='hr_records:login')
+@login_required(login_url='HRWaveApp:login')
 def sick_leave_pdf(request):
 
     search_query = request.GET.get('q')
@@ -507,7 +507,7 @@ def sick_leave_pdf(request):
     # Создаем PDF-документ с помощью библиотеки ReportLab
     c = canvas.Canvas(response, pagesize=letter)
 
-    pdfmetrics.registerFont(TTFont('Arial', 'hr_records/fonts/ArialRegular.ttf'))
+    pdfmetrics.registerFont(TTFont('Arial', 'HRWaveApp/fonts/ArialRegular.ttf'))
 
     c.setFont('Arial', 12)
 

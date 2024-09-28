@@ -1,4 +1,4 @@
-{% extends 'hr_records/base.html' %}
+{% extends 'HRWaveApp/base.html' %}
 
 {% block content %}
 
@@ -11,7 +11,7 @@
 	        <button type="submit" class="btn btn-primary btn-block">Искать</button>
 	    </div>
 	    <div class="form-group mb-2 col-md-2">
-	        <a href="{% url 'hr_records:create_employee' %}" class="btn btn-success btn-block">Добавить</a>
+	        <a href="{% url 'HRWaveApp:create_employee' %}" class="btn btn-success btn-block">Добавить</a>
 	    </div>
 	</form>
 
@@ -20,7 +20,7 @@
             <li class="list-group-item">
                 <div class="row d-flex align-items-center">
                     <div class="col">
-                        <a class="text-decoration-none" href="{% url 'hr_records:employee_detail' employee.employee_id %}">
+                        <a class="text-decoration-none" href="{% url 'HRWaveApp:employee_detail' employee.employee_id %}">
                             {{ employee.last_name }} {{ employee.first_name }}
                         </a>
                     </div>
@@ -32,14 +32,14 @@
 				            Действия
 				        </button>
 				        <div class="dropdown-menu dropdown-menu-right">
-				            <a class="dropdown-item" href="{% url 'hr_records:create_vacation' %}?employee_id={{ employee.employee_id }}">Создать отпуск</a>
-				            <a class="dropdown-item" href="{% url 'hr_records:create_business_trip' %}?employee_id={{ employee.employee_id }}">Создать командировку</a>
-				            <a class="dropdown-item" href="{% url 'hr_records:create_sick_leave' %}?employee_id={{ employee.employee_id }}">Создать больничный</a>
+				            <a class="dropdown-item" href="{% url 'HRWaveApp:create_vacation' %}?employee_id={{ employee.employee_id }}">Создать отпуск</a>
+				            <a class="dropdown-item" href="{% url 'HRWaveApp:create_business_trip' %}?employee_id={{ employee.employee_id }}">Создать командировку</a>
+				            <a class="dropdown-item" href="{% url 'HRWaveApp:create_sick_leave' %}?employee_id={{ employee.employee_id }}">Создать больничный</a>
 					        <div class="dropdown-divider"></div>
-					        <a class="dropdown-item" href="{% url 'hr_records:export_json' %}?employee_id={{ employee.employee_id }}">Экспорт В JSON</a>
-				            <a class="dropdown-item" href="{% url 'hr_records:export_pdf' employee_id=employee.employee_id %}">Экспорт в PDF</a>
+					        <a class="dropdown-item" href="{% url 'HRWaveApp:export_json' %}?employee_id={{ employee.employee_id }}">Экспорт В JSON</a>
+				            <a class="dropdown-item" href="{% url 'HRWaveApp:export_pdf' employee_id=employee.employee_id %}">Экспорт в PDF</a>
 				            <div class="dropdown-divider"></div>
-					        <a class="dropdown-item" href="{% url 'hr_records:edit_employee' employee_id=employee.employee_id %}">Редактировать</a>
+					        <a class="dropdown-item" href="{% url 'HRWaveApp:edit_employee' employee_id=employee.employee_id %}">Редактировать</a>
 				        </div>
 				    </div>
 				</div>

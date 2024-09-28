@@ -1,4 +1,7 @@
 .idea/
-.venv/
+venv/
+.git
 __pycache__/
 *.sqlite3
+*.log
+*.tmp

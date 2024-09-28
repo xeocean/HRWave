@@ -1,4 +1,4 @@
-{% extends 'hr_records/base.html' %}
+{% extends 'HRWaveApp/base.html' %}
 
 {% block content %}
 
@@ -46,7 +46,7 @@
                         <label for="{{ form.date_of_birth.id_for_label }}">Дата рождения:</label>
                         <input type="date" id="{{ form.date_of_birth.id_for_label }}"
                                name="{{ form.date_of_birth.name }}" class="form-control"
-                               value="{{ form.date_of_birth.value }}">
+                               value="{{ form.date_of_birth.value|date:'Y-m-d' }}">
 	                    {% if form.errors.date_of_birth %}
                             <h6 class="text-danger">{{ form.errors.date_of_birth }}</h6>
                         {% endif %}
@@ -66,7 +66,7 @@
                         <label for="{{ form.hire_date.id_for_label }}">Дата приема на работу:</label>
                         <input type="date" id="{{ form.hire_date.id_for_label }}"
                                name="{{ form.hire_date.name }}" class="form-control"
-                               value="{{ form.hire_date.value }}">
+                               value="{{ form.hire_date.value|date:'Y-m-d' }}">
 	                    {% if form.errors.hire_date %}
                             <h6 class="text-danger">{{ form.errors.hire_date }}</h6>
                         {% endif %}
@@ -133,7 +133,7 @@
                         <label for="{{ form.passport_issued_date.id_for_label }}">Дата выдачи паспорта:</label>
                         <input type="date" id="{{ form.passport_issued_date.id_for_label }}"
                                name="{{ form.passport_issued_date.name }}" class="form-control"
-                               value="{{ form.passport_issued_date.value }}">
+                               value="{{ form.passport_issued_date.value|date:'Y-m-d' }}">
 	                    {% if form.errors.passport_issued_date %}
                             <h6 class="text-danger">{{ form.errors.passport_issued_date }}</h6>
                         {% endif %}
@@ -184,16 +184,10 @@
 
         <div class="row justify-content-around mb-3">
 
-            <div class="col-sm-3 mt-3">
-                <div class="text-center">
-	                <a class="btn btn-danger btn-block" href="{% url 'hr_records:employee_list' %}">Вернуться</a>
-                </div>
-            </div>
-
-            <div class="col-sm-3 mt-3">
+            <div class="col-sm-4 mt-3">
 
 				<div class="text-center">
-				    <button type="button" class="btn btn-success btn-block">Создать</button>
+				    <button type="button" class="btn btn-success btn-block">Сохранить изменения</button>
 				</div>
 
 				<!-- Модальное окно для подтверждения -->
@@ -207,7 +201,7 @@
 				                </button>
 				            </div>
 				            <div class="modal-body">
-				                Вы уверены, что хотите создать запись?
+				                Вы уверены, что хотите внести изменения?
 				            </div>
 				            <div class="modal-footer">
 				                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
@@ -238,9 +232,7 @@
 				</div>
 
             </div>
-
         </div>
-
     </form>
 </div>
 
@@ -292,5 +284,6 @@
 	        });
 		});
 	</script>
+
 
 {% endblock content %}

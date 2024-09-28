@@ -1,4 +1,4 @@
-{% extends 'hr_records/base.html' %}
+{% extends 'HRWaveApp/base.html' %}
 
 {% block content %}
 
@@ -32,37 +32,36 @@
 	    </div>
 
 		<div class="form-group mb-0 col-md-2">
-		<a href="{% url 'hr_records:vacation_pdf' %}?q={{ request.GET.q }}&year={{ request.GET.year }}
+		<a href="{% url 'HRWaveApp:sick_leave_pdf' %}?q={{ request.GET.q }}&year={{ request.GET.year }}
 		&month={{ request.GET.month }}" class="btn btn-secondary btn-block">Экспорт в PDF</a>
 		</div>
 
 	</form>
 
 	<div class="row mt-2">
-	    {% for vacation in vacations %}
-	        <div class="col-12">
-	            <div class="card mb-3">
-	                <div class="card-header">
-	                    Сотрудник: {{ vacation.employee_vacation }}
-	                </div>
-	                <div class="card-body">
-	                    <p class="card-text">Дата начала отпуска: {{ vacation.start_date_vacation }}</p>
-	                    <p class="card-text">Дата конца отпуска: {{ vacation.end_date_vacation }}</p>
-		                <p class="card-text">Вид отпуска:
-			                {% if vacation.type_vacation %}
-		                        {{ vacation.type_vacation }}
+	    {% for sick_leave in sick_leaves %}
+		    <div class="col-12">
+		        <div class="card mb-3">
+		            <div class="card-header">
+		                Сотрудник: {{ sick_leave.employee_sick_leave }}
+		            </div>
+		            <div class="card-body">
+		                <p class="card-text">Дата начала больничного: {{ sick_leave.start_date_sick_leave }}</p>
+		                <p class="card-text">Дата конца больничного: {{ sick_leave.end_date_sick_leave }}</p>
+		                <p class="card-text">Причина:
+		                    {% if sick_leave.reason %}
+		                        {{ sick_leave.reason }}
 		                    {% else %}
 		                        Нет данных
 		                    {% endif %}
 		                </p>
-	                </div>
-	            </div>
-	        </div>
+		            </div>
+		        </div>
+		    </div>
 	    {% empty %}
-		    <li class="mx-5">Нет данных</li>
+	        <li class="mx-5">Нет данных</li>
 	    {% endfor %}
 	</div>
-
 
     <!-- Пагинатор -->
 	<nav aria-label="Page navigation" class="mt-2">
@@ -98,4 +97,3 @@
 	</nav>
 
 {% endblock content %}
-
